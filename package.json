@@ -1,0 +1,18 @@
+{
+  "name": "kng-engine",
+  "version": "1.0.0",
+  "description": "Keiwen Name Generator Engine - base classes to run name generator",
+  "author": "Keiwen <keiwen.mk@gmail.com>",
+  "private": false,
+  "scripts": {},
+  "main": "src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Keiwen/kng-engine.git"
+  },
+  "keywords": [
+    "name generator",
+    "random"
+  ],
+  "devDependencies": {}
+}
