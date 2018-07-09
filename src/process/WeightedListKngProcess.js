@@ -16,7 +16,7 @@ export default class WeightedListKngProcess extends KngProcess {
 	  super(key, parameters)
 
     this.defaultWeight = 1
-    if (typeof this.rawParameters.defaultWeight === 'number' && this.rawParameters.defaultWeight > 0) this.order = this.rawParameters.defaultWeight
+    if (typeof this.rawParameters.defaultWeight === 'number' && this.rawParameters.defaultWeight > 0) this.defaultWeight = this.rawParameters.defaultWeight
 
     this.cumulativeWeight = 0
     this.weightedList = {}

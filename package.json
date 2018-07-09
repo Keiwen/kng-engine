@@ -1,6 +1,6 @@
 {
   "name": "kng-engine",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Keiwen Name Generator Engine - base classes to run name generator",
   "author": "Keiwen <keiwen.mk@gmail.com>",
   "private": false,
