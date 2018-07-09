@@ -189,24 +189,24 @@ export default class KngSerializer {
       key = ''
     }
     let kngProcess = null
+    // copy parameters if we need to manipulate it
+    // be sure to get numbers and not strings for parameters for example
+    let parametersCopy = JSON.parse(JSON.stringify(serialProcess.parameters))
     switch(serialProcess.type) {
       case 'RawList':
-        kngProcess = new RawListKngProcess(key, serialProcess.parameters)
+        kngProcess = new RawListKngProcess(key, parametersCopy)
         break
       case 'WeightedList':
-        let parametersCopy = JSON.parse(JSON.stringify(serialProcess.parameters))
         if (typeof parametersCopy.defaultWeight !== 'undefined') parametersCopy.defaultWeight = Number(parametersCopy.defaultWeight)
         kngProcess = new WeightedListKngProcess(key, parametersCopy)
         break
       case 'Sequence':
-        kngProcess = new SequenceKngProcess(key, serialProcess.parameters)
+        kngProcess = new SequenceKngProcess(key, parametersCopy)
         break
       case 'CharGroup':
-        kngProcess = new CharGroupPatternKngProcess(key, serialProcess.parameters)
+        kngProcess = new CharGroupPatternKngProcess(key, parametersCopy)
         break
       case 'Markov':
-        //be sure to get numbers and not strings for parameters
-        let parametersCopy = JSON.parse(JSON.stringify(serialProcess.parameters))
         if (typeof parametersCopy.order !== 'undefined') parametersCopy.order = Number(parametersCopy.order)
         if (typeof parametersCopy.minLength !== 'undefined') parametersCopy.minLength = Number(parametersCopy.minLength)
         if (typeof parametersCopy.maxLength !== 'undefined') parametersCopy.maxLength = Number(parametersCopy.maxLength)
