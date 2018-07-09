@@ -194,7 +194,9 @@ export default class KngSerializer {
         kngProcess = new RawListKngProcess(key, serialProcess.parameters)
         break
       case 'WeightedList':
-        kngProcess = new WeightedListKngProcess(key, serialProcess.parameters)
+        let parametersCopy = JSON.parse(JSON.stringify(serialProcess.parameters))
+        if (typeof parametersCopy.defaultWeight !== 'undefined') parametersCopy.defaultWeight = Number(parametersCopy.defaultWeight)
+        kngProcess = new WeightedListKngProcess(key, parametersCopy)
         break
       case 'Sequence':
         kngProcess = new SequenceKngProcess(key, serialProcess.parameters)
