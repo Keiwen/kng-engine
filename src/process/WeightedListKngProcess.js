@@ -9,10 +9,14 @@ export default class WeightedListKngProcess extends KngProcess {
    * Generation will pick a random number from 1 to cumulative weight and select values in that range from weighted list
    * @constructor
    * @param {string} key Process' key (mainly used for import/export)
-   * @param {object} parameters Parameters to use for this process.
+   * @param {object} parameters Parameters to use for this process. If number provided, considered as default weight
    */
 	constructor(key, parameters) {
+    if (typeof parameters === 'number') parameters = {defaultWeight: parameters}
 	  super(key, parameters)
+
+    this.defaultWeight = 1
+    if (typeof this.rawParameters.defaultWeight === 'number' && this.rawParameters.defaultWeight > 0) this.order = this.rawParameters.defaultWeight
 
     this.cumulativeWeight = 0
     this.weightedList = {}
@@ -26,7 +30,7 @@ export default class WeightedListKngProcess extends KngProcess {
    */
   addToDictionary(term, weight) {
     if (typeof weight === 'undefined') {
-      weight = 1;
+      weight = this.defaultWeight;
     }
     if (typeof term !== 'string') {
       this.throwError(this.ERROR_INVALID_FORMAT, 'term to add should be a string')
