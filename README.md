@@ -2,6 +2,9 @@
 [![npm](https://img.shields.io/npm/v/kng-engine.svg)](https://www.npmjs.com/package/kng-engine)
 [![npm](https://img.shields.io/npm/dt/kng-engine.svg)](https://www.npmjs.com/package/kng-engine)
 
+## How to try?
+Check out configurator side-project https://github.com/Keiwen/kng-config
+
 ## Global use
 - npm install
 ```
