@@ -4,7 +4,6 @@ import WeightedListKngProcess from '../process/WeightedListKngProcess'
 import SequenceKngProcess from '../process/SequenceKngProcess'
 import CharGroupPatternKngProcess from '../process/CharGroupPatternKngProcess'
 import MarkovKngProcess from '../process/MarkovKngProcess'
-import KngNameComponent from '../origin/KngNameComponent'
 import KngNameComposition from '../origin/KngNameComposition'
 import KngOrigin from '../origin/KngOrigin'
 import KngEngine from '../KngEngine'
@@ -80,16 +79,6 @@ export default class KngSerializer {
   }
 
 
-  static serializeComponent(kngComponent) {
-    if (typeof kngComponent !== 'object' || !kngComponent.prototype instanceof KngNameComponent) {
-      throw new Error('Invalid component to serialize')
-    }
-    return {
-      'process': kngComponent.process.key
-    }
-  }
-
-
   static serializeComposition(kngComposition) {
     if (typeof kngComposition !== 'object' || !kngComposition.prototype instanceof KngNameComposition) {
       throw new Error('Invalid composition to serialize')
@@ -131,7 +120,6 @@ export default class KngSerializer {
       throw new Error('Invalid engine to serialize')
     }
     let serialEngine = {
-      'processes': {},
       'components': {},
       'compositions': {},
       'origins': {}
@@ -139,7 +127,6 @@ export default class KngSerializer {
     let weightRebuild = 0
     let compositions = {}
     let components = {}
-    let processes = {}
     for (let cumulWeight in kngEngine.originsWeigtedList.weightedList) {
       let originKey = kngEngine.originsWeigtedList.weightedList[cumulWeight]
       let origin = kngEngine.origins[originKey]
@@ -162,14 +149,8 @@ export default class KngSerializer {
       }
     }
     for (let componentKey in components) {
-      let component = components[componentKey]
-      serialEngine['components'][componentKey] = this.serializeComponent(component)
-      //store all different process
-      processes[component.key] = component.process
-    }
-    for (let processKey in processes) {
-      let process = processes[processKey]
-      serialEngine['processes'][processKey] = this.serializeProcess(process)
+      let componentProcess = components[componentKey]
+      serialEngine['components'][componentKey] = this.serializeProcess(componentProcess)
     }
     return serialEngine
   }
@@ -222,15 +203,6 @@ export default class KngSerializer {
   }
 
 
-  static parseComponent(serialComponent, key, processes) {
-    let processKey = serialComponent['process']
-    if (typeof processes[processKey] === 'undefined') {
-      throw new Error('Process ' + processKey + ' not found (used in component ' + key + ')')
-    }
-    return new KngNameComponent(key, processes[processKey])
-  }
-
-
   static parseComposition(serialComposition, key, components) {
     let composition = new KngNameComposition(key, serialComposition.pattern)
     for (let componentPartKey in serialComposition.components) {
@@ -262,24 +234,18 @@ export default class KngSerializer {
       throw new Error('Invalid engine to parse')
     }
     if (
-      typeof serialEngine.processes !== 'object'
-      || typeof serialEngine.components !== 'object'
+      typeof serialEngine.components !== 'object'
       || typeof serialEngine.compositions !== 'object'
       || typeof serialEngine.origins !== 'object'
     ) {
       throw new Error('Invalid engine to parse')
     }
     let engine = new KngEngine()
-    let processes = {}
     let components = {}
     let compositions = {}
-    for (let processKey in serialEngine.processes) {
-      let process = serialEngine.processes[processKey]
-      processes[processKey] = this.parseProcess(process, processKey)
-    }
-    for (let componentKey in serialEngine.components) {
-      let component = serialEngine.components[componentKey]
-      components[componentKey] = this.parseComponent(component, componentKey, processes)
+    for (let processKey in serialEngine.components) {
+      let process = serialEngine.components[processKey]
+      components[processKey] = this.parseProcess(process, processKey)
     }
     for (let compositionKey in serialEngine.compositions) {
       let composition = serialEngine.compositions[compositionKey]

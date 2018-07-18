@@ -1,4 +1,4 @@
-import KngNameComponent from './KngNameComponent'
+import KngProcess from '../process/KngProcess'
 
 export default class KngNameComposition {
 
@@ -18,15 +18,15 @@ export default class KngNameComposition {
 	}
 
   /**
-   * @param nameComponent
+   * @param nameComponentProcess
    * @param partKey used in pattern
    */
-  addNameComponent(nameComponent, partKey) {
-    if (typeof nameComponent !== 'object' || !nameComponent.prototype instanceof KngNameComponent) {
+  addNameComponent(nameComponentProcess, partKey) {
+    if (typeof nameComponentProcess !== 'object' || !nameComponentProcess.prototype instanceof KngProcess) {
       throw new Error('Invalid name component')
     }
-    nameComponent.isValid()
-    this.components[partKey] = nameComponent
+    nameComponentProcess.checkReadyForGeneration()
+    this.components[partKey] = nameComponentProcess
   }
 
   /**
@@ -38,8 +38,8 @@ export default class KngNameComposition {
 	  let splitName = {split: {}, plain: ''}
     for (let i = 0; i < this.pattern.length; i++) {
       if (!this.components[this.pattern[i]]) continue
-      let component = this.components[this.pattern[i]]
-      splitName['split'][this.pattern[i]] = component.generateName()
+      let componentProcess = this.components[this.pattern[i]]
+      splitName['split'][this.pattern[i]] = componentProcess.generate()
       plainName += splitName['split'][this.pattern[i]] + ' '
     }
     plainName = plainName.trim()

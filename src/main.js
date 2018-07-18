@@ -4,7 +4,6 @@ import WeightedListKngProcess from './process/WeightedListKngProcess'
 import SequenceKngProcess from './process/SequenceKngProcess'
 import CharGroupPatternKngProcess from './process/CharGroupPatternKngProcess'
 import MarkovKngProcess from './process/MarkovKngProcess'
-import KngNameComponent from './origin/KngNameComponent'
 import KngNameComposition from './origin/KngNameComposition'
 import KngOrigin from './origin/KngOrigin'
 import KngEngine from './KngEngine'
@@ -17,7 +16,6 @@ export {
 	SequenceKngProcess,
 	CharGroupPatternKngProcess,
 	MarkovKngProcess,
-	KngNameComponent,
 	KngNameComposition,
 	KngOrigin,
 	KngEngine,

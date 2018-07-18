@@ -10,8 +10,7 @@ The Keiwen Name Generator Engine aims to generate random names. It contains 4 sp
 
 - Origin: represents the origin of the name (country, race, ...). It contains one or more compositions.
 - Composition: represents the name composition (first then last name, only a nickname, ...). It contains one or more components.
-- Component: represents a part of a full name (first name, last name, ...). It uses a process.
-- Process: defines rules to generate a random name, based on entries given (the 'dictionary'). There are several types of processes, learn more in process documentation.
+- Component: represents a part of a full name (first name, last name, ...). It uses a process, that defines rules to generate a random name, based on entries given (the 'dictionary'). There are several types of processes, learn more in process documentation.
 
 ## Process types
 A process will generate a random name based on given entries (the 'dictionary'). Processes are using following boolean parameters to format output (default value is false):
@@ -116,19 +115,14 @@ import { RawListKngProcess } from 'kng-engine'
 - Sample here of usa people with small percentage having french first name:
 ```
 // english first name
-let enFirstNameProcess = new RawListKngProcess('efn')
-enFirstNameProcess.addListToDictionary(['Michael', 'Andrew', 'Ryan'])
+let enFirstNameComponent = new RawListKngProcess('efn')
+enFirstNameComponent.addListToDictionary(['Michael', 'Andrew', 'Ryan'])
 // french first name
-let frFirstNameProcess = new RawListKngProcess('ffn')
-frFirstNameProcess.addListToDictionary(['Pierre', 'Nicolas', 'Jean'])
+let frFirstNameComponent = new RawListKngProcess('ffn')
+frFirstNameComponent.addListToDictionary(['Pierre', 'Nicolas', 'Jean'])
 // english last name
-let enLastNameProcess = new RawListKngProcess('eln')
-enLastNameProcess.addListToDictionary(['Smith', 'Jones', 'Williams'])
-// _______________________________
-// name components
-let enFirstNameComponent = new KngNameComponent('efn', enFirstNameProcess)
-let frFirstNameComponent = new KngNameComponent('ffn', frFirstNameProcess)
-let enLastNameComponent = new KngNameComponent('eln', enLastNameProcess)
+let enLastNameComponent = new RawListKngProcess('eln')
+enLastNameComponent.addListToDictionary(['Smith', 'Jones', 'Williams'])
 // _______________________________
 // full english composition
 let enComposition = new KngNameComposition('en', ['first', 'last'])
