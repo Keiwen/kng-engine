@@ -19,12 +19,15 @@ export default class CharGroupPatternKngProcess extends KngProcess {
     // dictionary will be a object using a key for each group of chars
     this.dictionary = {}
 
-    this.pattern = []
     this.patternList = []
     if (this.rawParameters.pattern) {
-      const patternList = KngProcess.splitTerm(this.rawParameters.pattern)
-      for (let i = 0; i < patternList.length; i++) {
-        this.addPattern(patternList[i])
+      if (KngProcess.detectSeparator(this.rawParameters.pattern) === '') {
+        this.addPattern(this.rawParameters.pattern)
+      } else {
+        const patternList = KngProcess.splitTerm(this.rawParameters.pattern)
+        for (let i = 0; i < patternList.length; i++) {
+          this.addPattern(patternList[i])
+        }
       }
     }
 	}

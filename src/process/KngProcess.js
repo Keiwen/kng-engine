@@ -152,31 +152,37 @@ export default class KngProcess {
     }
   }
 
-  static splitTerm(multipleTerms) {
-    if (typeof multipleTerms !== 'string') this.throwError(this.ERROR_INVALID_FORMAT, 'tried to split term on non-string input')
+
+  static detectSeparator(term) {
+    if (typeof term !== 'string') this.throwError(this.ERROR_INVALID_FORMAT, 'tried to detect separator on non-string input')
     let separator = ''
     switch (true) {
-      case (multipleTerms.indexOf(', ') !== -1):
+      case (term.indexOf(', ') !== -1):
         separator = ', '
         break
-      case (multipleTerms.indexOf(',') !== -1):
+      case (term.indexOf(',') !== -1):
         separator = ','
         break
-      case (multipleTerms.indexOf('; ') !== -1):
+      case (term.indexOf('; ') !== -1):
         separator = '; '
         break
-      case (multipleTerms.indexOf(';') !== -1):
+      case (term.indexOf(';') !== -1):
         separator = ';'
         break
-      case (multipleTerms.indexOf(' / ') !== -1):
+      case (term.indexOf(' / ') !== -1):
         separator = ' / '
         break
-      case (multipleTerms.indexOf('/') !== -1):
+      case (term.indexOf('/') !== -1):
         separator = '/'
         break
     }
+    return separator
+  }
+
+  static splitTerm(multipleTerms) {
+    if (typeof multipleTerms !== 'string') this.throwError(this.ERROR_INVALID_FORMAT, 'tried to split term on non-string input')
     //turn string to array (if no separator, will split each char)
-    return multipleTerms.split(separator);
+    return multipleTerms.split(KngProcess.detectSeparator(multipleTerms));
   }
 
 }
