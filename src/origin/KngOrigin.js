@@ -39,13 +39,27 @@ export default class KngOrigin {
    * @returns {string[Object}
    */
   generateName(plain) {
+    const randomCompositionKey = this.compositionsWeigtedList.generate()
+    return this.generateNameFromComposition(randomCompositionKey, plain)
+  }
+
+
+  /**
+   * @param compositionKey force composition pick
+   * @param plain return full string combined, or map with details
+   * @returns {string[Object}
+   */
+  generateNameFromComposition(compositionKey, plain) {
+    if (typeof compositionKey !== 'string' || typeof this.compositions[compositionKey] === 'undefined') {
+      // composition not found, generate without forcing key
+      return this.generateName(plain)
+    }
     let plainName = ''
     let splitName = {}
-    const randomCompositionKey = this.compositionsWeigtedList.generate()
-    const randomComposition = this.compositions[randomCompositionKey]
-    let name = randomComposition.generateName(plain)
+    const composition = this.compositions[compositionKey]
+    let name = composition.generateName(plain)
     if (plain) return name
-    name['composition'] = randomCompositionKey
+    name['composition'] = compositionKey
     return name
   }
 

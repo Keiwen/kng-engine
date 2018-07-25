@@ -55,6 +55,26 @@ export default class KngEngine {
 
 
   /**
+   * @param compositionKey force to use given composition if found
+   * @param originKey origin containing composition
+   * @param plain return full string combined, or map with details
+   * @returns {string[Object}
+   */
+  generateNameFromComposition(compositionKey, originKey, plain) {
+    if (typeof originKey !== 'string' || typeof this.origins[originKey] === 'undefined') {
+      // origin not found, generate without forcing key
+      return this.generateName(plain)
+    }
+
+    const origin = this.origins[originKey]
+    let name = origin.generateNameFromComposition(compositionKey, plain)
+    if (plain) return name
+    name['origin'] = originKey
+    return name
+  }
+
+
+  /**
    * @returns {boolean}
    */
   isOriginsValid() {
