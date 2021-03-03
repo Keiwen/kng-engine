@@ -159,7 +159,7 @@ export default class MarkovKngProcess extends KngProcess {
       allowSubDuplicates: this.allowSubDuplicates,
       ignoreWeight: this.ignoreWeight
     }
-    let newMarkov = new MarkovKngProcess(parameters)
+    let newMarkov = new MarkovKngProcess(this.key, parameters)
     newMarkov.addListToDictionary(this.dictionary)
     return newMarkov
   }
